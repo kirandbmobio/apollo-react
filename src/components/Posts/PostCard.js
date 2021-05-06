@@ -22,7 +22,7 @@ function PostCard({ post }) {
         <Card.Header as={Link} to={`/posts/${_id}`}>
           {title}
         </Card.Header>
-        <Card.Meta>{moment(createdAt).format("YYYY")}</Card.Meta>
+        <Card.Meta>{moment(createdAt, "x").fromNow()}</Card.Meta>
         <Card.Description>{title}</Card.Description>
       </Card.Content>
       <Card.Content extra>
