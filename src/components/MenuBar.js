@@ -15,8 +15,20 @@ function MenuBar() {
 
   const menuBar = context.user ? (
     <Menu pointing secondary size="massive" color="teal">
-      <Menu.Item name={context.user.username} active as={Link} to="/" />
-
+      <Menu.Item
+        name="dashboard"
+        active={activeItem === "dashboard"}
+        onClick={handleItemClick}
+        as={Link}
+        to="/"
+      />
+      <Menu.Item
+        name="users"
+        active={activeItem === "users"}
+        onClick={handleItemClick}
+        as={Link}
+        to="/users"
+      />
       <Menu.Menu position="right">
         <Menu.Item name="logout" onClick={context.logout} />
       </Menu.Menu>

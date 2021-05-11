@@ -20,11 +20,11 @@ function Login(props) {
   );
 
   // Lazy query for login user method
-  const [
-    authenticateUser,
-    { called, loading, data, error },
-  ] = useLazyQuery(LOGIN_USER, { variables: values });
-  console.log(error, loading);
+  const [authenticateUser, { called, loading, data, error }] = useLazyQuery(
+    LOGIN_USER,
+    { variables: values }
+  );
+
   // Store token if login is successful
   if (data) {
     context.login(data.authenticateUser);

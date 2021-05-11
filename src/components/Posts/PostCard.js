@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Icon, Label, Image, Button } from "semantic-ui-react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
+import { AuthContext } from "../../context/auth";
+import LikeButton from "./LikeButton";
+import DeletePost from "./DeletePost";
+
+import { dateFormat } from "../../utils/filter";
+
 function PostCard({ post }) {
-  const { _id, title, createdAt } = post;
-  function likePost() {
-    console.log("likePost");
-  }
+  const { user } = useContext(AuthContext);
+  const { _id, title, createdAt, author } = post;
   function commentOnPost() {
     console.log("comment");
   }
@@ -22,24 +26,14 @@ function PostCard({ post }) {
         <Card.Header as={Link} to={`/posts/${_id}`}>
           {title}
         </Card.Header>
-        <Card.Meta>{moment(createdAt, "x").fromNow()}</Card.Meta>
+        <Card.Meta>{dateFormat(createdAt)}</Card.Meta>
         <Card.Description>{title}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button
-          as="div"
-          labelPosition="right"
-          onClick={likePost}
-          style={{ marginBottom: 10 }}
-        >
-          <Button color="teal" basic>
-            <Icon name="heart" />
-            Like
-          </Button>
-          <Label basic color="teal" pointing="left">
-            2,048
-          </Label>
-        </Button>
+        <LikeButton
+          post={{ _id, title, createdAt, author }}
+          user={user}
+        ></LikeButton>
         <Button as="div" labelPosition="right" onClick={commentOnPost}>
           <Button color="blue" basic>
             <Icon name="comment" />
@@ -49,6 +43,9 @@ function PostCard({ post }) {
             2,048
           </Label>
         </Button>
+        {user && user.username === author.username && (
+          <DeletePost postId={_id} />
+        )}
       </Card.Content>
     </Card>
   );
