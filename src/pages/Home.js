@@ -1,21 +1,19 @@
 import React, { useContext } from "react";
-import { useQuery } from "@apollo/client";
-import gql from "graphql-tag";
 import { Grid, Transition } from "semantic-ui-react";
+import { useSelector, useDispatch, useStore } from "react-redux";
 
 import { AuthContext } from "../context/auth";
 import PostCard from "../components/Posts/PostCard";
 import PostForm from "../components/Posts/PostForm.js";
-import { FETCH_POSTS_QUERY } from "../utils/graphql";
 
 function Home() {
   const context = useContext(AuthContext);
-  const { loading, data } = useQuery(FETCH_POSTS_QUERY);
-  let posts;
-  if (data) {
-    let { getAllPosts } = data;
-    posts = getAllPosts;
-  }
+  /* states */
+  //   const posts =
+  let posts = useSelector((state) => state.postReducer.posts);
+  let loading = useSelector((state) => state.postReducer.loading);
+  let dispatch = useDispatch();
+  dispatch({ type: "FETCH_POSTS" });
   return (
     <Grid columns={3}>
       <Grid.Row className="page-title">

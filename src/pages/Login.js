@@ -9,7 +9,6 @@ import { AuthContext } from "../context/auth";
 
 function Login(props) {
   const context = useContext(AuthContext);
-  const [errors, setErrors] = useState({ errors: [] });
 
   const { values, onChange, onSubmit } = useForm(
     (credentials) => authenticateUser(),

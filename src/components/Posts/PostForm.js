@@ -2,16 +2,21 @@ import React, { useState } from "react";
 import { Form, Button } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
+import { useSelector, useDispatch } from "react-redux";
 
 import { useForm } from "../../utils/hooks";
 import { FETCH_POSTS_QUERY, CREATE_POST } from "../../utils/graphql";
 
 function PostForm() {
+  const errors = useSelector((state) => state.commonReducer.errors);
+  const dispatch = useDispatch();
+  function setErrors(payload) {
+    dispatch({ type: "Set Errors", payload: payload.errors });
+  }
   const { values, onChange, onSubmit } = useForm(createNewPostCallback, {
     title: "",
     content: "",
   });
-  const [errors, setErrors] = useState({ errors: [] });
   const [createNewPost, { error }] = useMutation(CREATE_POST, {
     variables: { newPost: values },
     update(proxy, result) {
@@ -35,6 +40,7 @@ function PostForm() {
     },
     onError(err) {
       let messages;
+      console.log(err.message);
       if (err.message.includes(",")) {
         messages = err.message.split(",").map((err) => {
           err = err.split("Path")[1];
@@ -76,10 +82,10 @@ function PostForm() {
           </Button>
         </Form.Field>
       </Form>
-      {errors.errors.length > 0 && (
+      {errors.length > 0 && (
         <div className="ui error message" style={{ marginBottom: 20 }}>
           <ul className="list">
-            {errors.errors.map((serror, i) => (
+            {errors.map((serror, i) => (
               <li key={i}>{serror}</li>
             ))}
           </ul>
@@ -88,5 +94,11 @@ function PostForm() {
     </>
   );
 }
+
+// const mapStateToProps = (state) => {
+//   return {
+//     errors: state.commonReducer.errors,
+//   };
+// };
 
 export default PostForm;

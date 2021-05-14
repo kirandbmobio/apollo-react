@@ -1,20 +1,18 @@
 import React, { useContext } from "react";
-import { useQuery } from "@apollo/client";
 import { Grid, Transition } from "semantic-ui-react";
+import { useSelector, useDispatch } from "react-redux";
 
 import { AuthContext } from "../context/auth";
 import UserCard from "../components/Users/UserCard";
 import UserForm from "../components/Users/UserForm.js";
-import { ALL_USERS } from "../utils/graphql";
 
 function Users() {
   const context = useContext(AuthContext);
-  const { loading, data } = useQuery(ALL_USERS);
-  let users;
-  if (data) {
-    let { getAllUsers } = data;
-    users = getAllUsers;
-  }
+  const users = useSelector((state) => state.userReducer.users);
+  const loading = useSelector((state) => state.userReducer.loading);
+  let dispatch = useDispatch();
+  dispatch({ type: "FETCH_USERS" });
+
   return (
     <>
       <Grid>

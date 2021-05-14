@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SinglePost from "./pages/SinglePost";
 import Users from "./pages/Users";
+import NewComp from "./pages/NewComp";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Router>
         <Container>
           <MenuBar />
+          <NewComp />
           <Route exact path="/" component={Home} />
           <Route exact path="/users" component={Users} />
           <AuthRoute exact path="/login" component={Login} />
