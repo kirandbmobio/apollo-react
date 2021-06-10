@@ -13,7 +13,7 @@ function MenuBar() {
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
 
-  const menuBar = context.user ? (
+  return context.user ? (
     <Menu pointing secondary size="massive" color="teal">
       <Menu.Item
         name="dashboard"
@@ -61,8 +61,6 @@ function MenuBar() {
       </Menu.Menu>
     </Menu>
   );
-
-  return menuBar;
 }
 
 export default MenuBar;
