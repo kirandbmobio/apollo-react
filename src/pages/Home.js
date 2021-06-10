@@ -26,7 +26,7 @@ function Home() {
           </Grid.Column>
         )}
         {loading ? (
-          <h1>Loading Post .....</h1>
+          <h1>Loading Posts ........</h1>
         ) : (
           <Transition.Group>
             {posts.length > 0 &&
